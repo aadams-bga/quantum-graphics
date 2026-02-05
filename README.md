@@ -1,4 +1,6 @@
-# quantum-graphics
+# Quantum Explainer Graphics Package
+
+These graphics were developed for a series of explainer stories for the Illinois Answers Project, led by Binghui Huang with contributions from Andrew Adams. Contact [aadams@bettergov.org]() with questions or concerns. 
 
 ## Story 1: [How Much Public and Private Money Is Powering Chicago’s Quantum Push?](https://illinoisanswers.org/2026/01/27/how-much-public-and-private-money-is-powering-chicagos-quantum-push/)
 
