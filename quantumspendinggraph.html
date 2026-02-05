@@ -1,0 +1,294 @@
+<script src="https://d3js.org/d3.v7.min.js" defer></script>
+
+<style>
+    #quantum-stack-wrapper {
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+        max-width: 800px;
+        margin: 0 auto;
+        position: relative;
+        background-color: #ffffff; 
+        color: #333333; 
+        padding-bottom: 20px;
+        z-index: 0; 
+    }
+
+    .iap-logo {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        width: 150px; 
+        opacity: 0.15; 
+        z-index: 0; 
+        pointer-events: none; 
+    }
+
+    /* Elevate other elements */
+    #quantum-stack-wrapper h2,
+    #quantum-stack-wrapper p,
+    #quantum-stack-wrapper .quantum-legend,
+    #quantum-stack-wrapper #quantum-stack-d3,
+    #quantum-stack-wrapper .quantum-footer {
+        position: relative;
+        z-index: 1;
+    }
+
+    #quantum-stack-wrapper h2 {
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+        font-size: 22px;
+        margin-bottom: 5px;
+        color: #333;
+        line-height: 1.2;
+    }
+
+    #quantum-stack-wrapper p {
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+        font-size: 14px;
+        color: #555;
+        line-height: 1.4;
+        margin-bottom: 20px;
+    }
+
+    .quantum-legend {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-bottom: 20px;
+        font-size: 13px;
+        color: #333;
+    }
+    .legend-item { display: flex; align-items: center; }
+    .legend-color { width: 12px; height: 12px; margin-right: 6px; display: inline-block; border-radius: 50%;}
+
+    #quantum-stack-d3 { min-height: 550px; display: block; }
+
+    #quantum-stack-wrapper .grid line { stroke: #ccc; stroke-opacity: 0.5; stroke-dasharray: 2, 2; }
+    #quantum-stack-wrapper .grid path { stroke-width: 0; }
+    #quantum-stack-wrapper .axis-text { font-size: 14px; fill: #333; }
+
+    .quantum-stack-tooltip {
+        position: absolute;
+        text-align: left;
+        padding: 10px;
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+        font-size: 13px;
+        background: white;
+        color: #333;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        pointer-events: none; 
+        opacity: 0;
+        box-shadow: 2px 2px 6px rgba(0,0,0,0.2);
+        z-index: 1000;
+        max-width: 250px;
+    }
+
+    .quantum-footer {
+        margin-top: 30px;
+        padding-top: 10px;
+        border-top: 1px solid #eee;
+        font-size: 12px;
+        color: #666;
+        line-height: 1.4;
+    }
+    .quantum-footer a {
+        color: #666;
+        text-decoration: underline;
+        cursor: pointer;
+    }
+    .quantum-footer a:hover {
+        color: #000;
+    }
+</style>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<div id="quantum-stack-wrapper">
+    <img src="https://raw.githubusercontent.com/aadams-bga/images/bffe8cc967881aeed4fbdee8328f4b2e056159b9/iaplogo.svg" class="iap-logo" alt="IAP Logo">
+
+    <h2>Most of IQMP's public funding is going toward infrastructure</h2>
+    <p>
+        Of the roughly $960 million of public money so far dedicated to the IQMP 89% will pay for equipment and infrastructure around the
+        site. About 11% is allocated to long-term tax incentives for companies like PsiQuantum.<br><br>
+        
+        Hover over the bars to see more details. 
+    </p>
+
+    <div class="quantum-legend">
+        <div class="legend-item"><span class="legend-color" style="background:#ee8f00;"></span>Direct state funding</div>
+                <div class="legend-item"><span class="legend-color" style="background:#fccd5e"></span>State tax incentives</div>
+        <div class="legend-item"><span class="legend-color" style="background:#1f6e86;"></span>City of Chicago</div>
+        <div class="legend-item"><span class="legend-color" style="background:#6cb2c9;"></span>Cook County</div>
+        <div class="legend-item"><span class="legend-color" style="background:#009576;"></span>DARPA</div>
+    </div>
+    
+    <div id="quantum-stack-d3"></div>
+
+    <div class="quantum-footer">
+        Graph: Andrew Adams, Illinois Answers Project • Source: IQMP, 
+        <a href="https://www.ilga.gov/documents/reports/ReportsSubmitted/5594RSGAEmail12035RSGAAttachFiscal-Year-2026-Capital-Budget.pdf" target="_blank" rel="noopener noreferrer">Illinois General Assembly</a>, 
+        <a href="https://www.cookcountyil.gov/news/cook-county-board-commissioners-approves-20-million-investment-psiquantum-and-illinois-quantum" target="_blank" rel="noopener noreferrer">Cook County President's Office</a>, 
+        <a href="https://gov-pritzker-newsroom.prezly.com/gov-pritzker-announces-collaboration-with-ibm-to-build-new-national-quantum-algorithm-center" target="_blank" rel="noopener noreferrer">Illinois Governor's Office</a>
+        <a href="https://dceo.illinois.gov/businesshelp/incentivesandtaxcredits.html" target="_blank" rel="noopener noreferrer">Department of Commerce and Economic Opportunity</a><br>
+        
+        <span style="font-style: italic">Note: Data collected from IQMP budget presentation and other publicly announced grants.</span>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        
+        const rawData = [
+          { category: "Quantum Proving Ground", "Direct state funding": 140000000, "DARPA": 140000000 },
+          { category: "Cryogenic facility", "Direct state funding": 200000000, "Cook County":20000000 },
+            { category: "Discovery Partners Institute", "Direct state funding": 137000000 },
+            { category: "Site readiness", "Direct state funding": 130000000 },
+          { category: "Incentive packages for startups", "State tax incentives": 103000000 },
+          { category: "Research equipment", "Direct state funding": 60000000 },
+          { category: "National Quantum Algorithm Center", "Direct state funding": 25000000 },
+          { category: "TBD", "City of Chicago": 5000000 } 
+        ];
+
+        const subgroups = ["Direct state funding", "State tax incentives", "City of Chicago", "Cook County", "DARPA",];
+        const groups = rawData.map(d => d.category);
+
+        const sanitizedData = rawData.map(row => {
+            const newRow = { ...row };
+            subgroups.forEach(key => {
+                if (newRow[key] === undefined || newRow[key] === null) {
+                    newRow[key] = 0;
+                }
+            });
+            return newRow;
+        });
+
+const colorScale = d3.scaleOrdinal()
+    .domain(subgroups)
+    .range([
+        '#ee8f00', // Direct state funding
+        '#fccd5e', // State tax incentives
+        '#1f6e86', // City of Chicago
+        '#6cb2c9', // Cook County
+        '#009576'  // DARPA
+    ]);
+
+        const margin = { top: 10, right: 30, bottom: 30, left: 160 }; 
+        const container = document.getElementById("quantum-stack-d3");
+        container.style.minHeight = "0"; 
+        
+        const containerWidth = container.getBoundingClientRect().width || 600; 
+        const width = containerWidth - margin.left - margin.right;
+        const height = 550 - margin.top - margin.bottom;
+        const isSmallScreen = width < 350; 
+
+        d3.select("#quantum-stack-d3").selectAll("*").remove();
+        d3.select("body").selectAll(".quantum-stack-tooltip").remove();
+
+        const tooltip = d3.select("body").append("div").attr("class", "quantum-stack-tooltip");
+
+        const svg = d3.select("#quantum-stack-d3")
+          .append("svg")
+          .attr("viewBox", `0 0 ${width + margin.left + margin.right} ${height + margin.top + margin.bottom}`)
+          .attr("preserveAspectRatio", "xMidYMid meet")
+          .attr("role", "img")
+          .attr("aria-label", "Stacked bar chart showing allocation of IQMP funds")
+          .style("width", "100%")
+          .style("height", "auto")
+          .append("g")
+          .attr("transform", `translate(${margin.left},${margin.top})`);
+
+        const x = d3.scaleLinear().domain([0, 300000000]).range([0, width]);
+        const y = d3.scaleBand().domain(groups).range([0, height]).padding(0.4); 
+
+        const fontStack = '"Inter", sans-serif';
+        const wrapWidth = isSmallScreen ? 115 : margin.left - 10;
+        
+        svg.append("g")
+          .call(d3.axisLeft(y).tickSize(0))
+          .attr("class", "axis-text")
+          .style("font-family", fontStack)
+          .selectAll(".tick text").call(wrap, wrapWidth);
+        svg.select(".domain").remove();
+
+        svg.append("g")
+          .attr("transform", `translate(0,${height})`)
+          .call(d3.axisBottom(x)
+            .ticks(5)
+            .tickFormat(d => "$" + d3.format("~s")(d).replace("G", "B")) 
+          )
+          .attr("class", "axis-text")
+          .style("font-family", fontStack) 
+            .call(g => g.selectAll("text").style("fill", "#ccc"))
+        .call(g => g.selectAll("line").style("stroke", "rgba(0,0,0,0)"))
+          .select(".domain").remove();
+        
+        svg.append("g")
+          .attr("class", "grid")
+          .attr("transform", `translate(0,${height})`)
+          .call(d3.axisBottom(x).ticks(5).tickSize(-height).tickFormat(""))
+          .select(".domain").remove();
+
+        const stackedData = d3.stack()
+            .keys(subgroups)
+            (sanitizedData);
+
+        svg.append("g")
+            .selectAll("g")
+            .data(stackedData)
+            .join("g")
+            .attr("fill", d => colorScale(d.key))
+            .selectAll("rect")
+            .data(d => d)
+            .join("rect")
+            .attr("y", d => y(d.data.category))
+            .attr("x", d => x(d[0]))
+            .attr("width", d => x(d[1]) - x(d[0]))
+            .attr("height", y.bandwidth())
+            .on("mouseover", function(event, d) {
+                const subgroupName = d3.select(this.parentNode).datum().key;
+                const value = d[1] - d[0];
+                if (value <= 0) return; 
+                d3.select(this).style("opacity", 0.8);
+                tooltip.transition().duration(200).style("opacity", 1);
+                tooltip.html(`<strong>${subgroupName}</strong><br/>$${d3.format("~s")(value).replace("G", "B")}`);
+            })
+            .on("mousemove", function(event) {
+                tooltip.style("left", (event.pageX + 15) + "px").style("top", (event.pageY - 28) + "px");
+            })
+            .on("mouseleave", function() {
+                d3.select(this).style("opacity", 1);
+                tooltip.transition().duration(500).style("opacity", 0);
+            });
+
+        function wrap(text, width) {
+          text.each(function() {
+            var text = d3.select(this),
+                words = text.text().split(/\s+/).reverse(),
+                word,
+                line = [],
+                lineNumber = 0,
+                lineHeight = 1.2, 
+                y = text.attr("y"),
+                dy = parseFloat(text.attr("dy"));
+            
+            var tspan = text.text(null).append("tspan").attr("x", -10).attr("y", y).attr("dy", dy + "em");
+            
+            while (word = words.pop()) {
+              line.push(word);
+              tspan.text(line.join(" "));
+              if (tspan.node().getComputedTextLength() > width) {
+                line.pop();
+                tspan.text(line.join(" "));
+                line = [word];
+                tspan = text.append("tspan").attr("x", -10).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+              }
+            }
+            if (lineNumber > 0) {
+                const shift = (lineNumber * lineHeight) / 2;
+                text.selectAll("tspan").attr("y", -shift); 
+            }
+          });
+        }
+    }); 
+</script>
