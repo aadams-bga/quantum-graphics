@@ -18,4 +18,4 @@ These graphics were developed for a series of explainer stories for the Illinois
 
 ## Story 3: [Chicago’s Quantum Ambitions Come With a Water Question](https://illinoisanswers.org/2026/03/09/chicagos-quantum-ambitions-come-with-a-water-question/)
 
-[What is the Illinois Quantum & Microelectronics Park?]()
+[What is the Illinois Quantum & Microelectronics Park?](https://github.com/aadams-bga/quantum-graphics/blob/main/datawrapperMap_story3.html)
