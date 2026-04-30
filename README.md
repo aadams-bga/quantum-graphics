@@ -16,4 +16,6 @@ These graphics were developed for a series of explainer stories for the Illinois
 
 [Quantum Hub Map](https://github.com/aadams-bga/quantum-graphics/blob/main/datawrapperMap_story2.html) (developed and hosted in Datawrapper)
 
-## Story 3: TK
+## Story 3: [Chicago’s Quantum Ambitions Come With a Water Question](https://illinoisanswers.org/2026/03/09/chicagos-quantum-ambitions-come-with-a-water-question/)
+
+[What is the Illinois Quantum & Microelectronics Park?]()
